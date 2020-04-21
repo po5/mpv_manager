@@ -5,7 +5,7 @@ local dir_cache = {}
 
 local f = io.open(mp.command_native({"expand-path", "~~/manager.json"}), "r")
 if f then
-    local json = f:read()
+    local json = f:read("*all")
     f:close()
 
     local props = utils.parse_json(json or "")
