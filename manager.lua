@@ -95,9 +95,9 @@ function update(info)
         for _, file in ipairs(files) do
             local based = string.sub(file, string.len(base)+1)
             local p_based = parent(based)
-            if p_based then mkdir(e_dest.."/"..p_based) end
+            if p_based and not info.flatten_folders then mkdir(e_dest.."/"..p_based) end
             local c = string.match(run({"git", "-C", e_dest, "--no-pager", "show", "remotes/manager/"..info.branch..":"..file}).stdout, "(.-)[\r\n]?$")
-            local f = io.open(e_dest.."/"..based, "w")
+            local f = io.open(e_dest.."/"..(info.flatten_folders and file:match("[^/]+$") or based), "w")
             f:write(c)
             f:close()
         end
